@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>blocked</title>
+
+    <script type="text/javascript" src="https://rally1.rallydev.com/apps/2.1/sdk.js"></script>
+
+    <script type="text/javascript">
+        Rally.onReady(function () {
+                Ext.define("Rally.example.ExportableGridBoard",{extend:"Rally.app.App",componentCls:"app",launch:function(){Ext.create("Rally.data.wsapi.TreeStoreBuilder").build({models:["User Story"],autoLoad:!0,enableHierarchy:!0,fetch:["Name","Owner","Project","BlockedReason"],filters:[{property:"Blocked",operator:"=",value:!0}]}).then({success:this._onStoreBuilt,scope:this})},_onStoreBuilt:function(e){var t=this.getContext();this.add({xtype:"rallygridboard",context:t,modelNames:["User Story"],toggleState:"grid",stateful:!1,plugins:[{ptype:"rallygridboardactionsmenu",menuItems:[{text:"Export...",handler:function(){window.location=Rally.ui.grid.GridCsvExport.buildCsvExportUrl(this.down("rallygridboard").getGridOrBoard())},scope:this}],buttonConfig:{iconCls:"icon-export"}}],gridConfig:{store:e,columnCfgs:["Name","Owner","Project","BlockedReason"]},height:this.getHeight()})}});
+
+            Rally.launchApp('CustomApp', {
+                name:"blocked",
+                parentRepos:"",
+                version:"0.1.1"
+            });
+
+        });
+    </script>
+
+
+    <style type="text/css">
+        
+    </style>
+</head>
+<body>
+</body>
+</html>
